@@ -10,6 +10,7 @@ namespace SquishIt.Framework.JavaScript
         IJavaScriptBundleBuilder RenderOnlyIfOutputFileMissing();
         string Render(string renderTo);
         string RenderInLine();
+        string RenderInLineEscaped();
         void AsNamed(string name, string renderTo);
         IJavaScriptBundleBuilder ForceDebug();
         IJavaScriptBundleBuilder ForceRelease();
