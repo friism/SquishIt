@@ -17,6 +17,7 @@ namespace SquishIt.Framework.JavaScript
         //
         private JavaScriptMinifiers javaScriptMinifier = JavaScriptMinifiers.Ms;
         private const string scriptTemplate = "<script type=\"text/javascript\" src=\"{0}\"></script>";
+        private const string inlineScriptTemplate = "<script type=\"text/javascript\">{0}</script>";
         private bool renderOnlyIfOutputFileMissing = false;
 
         public JavaScriptBundle(): base(new FileWriterFactory(), new FileReaderFactory(), new DebugStatusReader())
@@ -115,6 +116,12 @@ namespace SquishIt.Framework.JavaScript
         string IJavaScriptBundleBuilder.Render(string renderTo)
         {
             return Render(renderTo, renderTo);
+        }
+
+        string IJavaScriptBundleBuilder.RenderInLine()
+        {
+            string compressedJavaScript = MinifyJavaScript(GetFiles(GetFilePaths(javaScriptFiles)), MapMinifierToIdentifier(javaScriptMinifier));
+            return string.Format(inlineScriptTemplate, compressedJavaScript);
         }
 
         private string Render(string renderTo, string key)
